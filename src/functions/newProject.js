@@ -1,20 +1,21 @@
-import {renderTodos} from "./renderTodo";
-import { createAddButton } from "./createAddButton";
+import { renderProject } from "./renderProject";
 
 const Project = (name) => {
     const todoList = [];
 
     const projectName = name;
 
-    // const getProjectName = () => projectName
+    const getTodoList = () => todoList;
 
-    const loadProjectPage = () => {
-        document.querySelector('#toDoName').value = '';
-        createAddButton(todoList);
-        renderTodos(todoList);
-    }
+    const selectProject = document.createElement('button');
+    selectProject.innerText = name;
+    selectProject.addEventListener('click', () => {
+        renderProject(todoList);
+    });
 
-    return {loadProjectPage}
+    document.querySelector('#projectList').appendChild(selectProject);
+
+    return { getTodoList }
 }
 
 export { Project };

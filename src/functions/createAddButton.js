@@ -1,17 +1,17 @@
 import {renderTodos} from "./renderTodo";
 import { addNewToDo } from "./addNewTodoButton";
 
-const todoDiv = document.querySelector('#inputForTodo');
+const main = document.querySelector('#main');
 
 const createAddButton = (todoList) => {
-    todoDiv.removeChild(todoDiv.lastChild);
+    main.removeChild(main.firstChild);
     const newBtn = document.createElement('button');
-    newBtn.innerText = '+';
+    newBtn.innerText = 'Add new todo';
     newBtn.addEventListener('click', () => {
         addNewToDo(todoList);
         renderTodos(todoList);
     })
-    todoDiv.appendChild(newBtn);
+    main.insertBefore(newBtn, main.firstChild);
 }
 
 export { createAddButton }
