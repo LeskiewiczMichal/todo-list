@@ -2,6 +2,7 @@ import { renderProject } from "./renderProject";
 import { removeTodo } from "./removeTodo";
 import { renderTodos } from "./renderTodo";
 
+// create new project
 const Project = (name) => {
     const todoList = [];
 
@@ -9,22 +10,14 @@ const Project = (name) => {
 
     const getTodoList = () => todoList;
 
+    // create button to select the project in menu 
     const selectProject = document.createElement('button');
     selectProject.innerText = name;
-    selectProject.addEventListener('click', () => {
-        renderProject(todoList);
+    selectProject.addEventListener('click', (e) => {
+        const selecProjectBtn = e.target;
+        renderProject(todoList, selecProjectBtn);
     });
 
-    // const renderedTodos = document.querySelectorAll('.Todo');
-    // renderedTodos.forEach(todo => {
-    //     const removeButton = document.createElement('button');
-    //     removeButton.addEventListener('click', () => {
-    //         removeTodo(todoList, todo);
-    //         renderTodos(todoList);
-    //     })
-
-    //     todo.parentNode.insertBefore(removeButton, todo.nextSibling)
-    // });
 
     document.querySelector('#projectList').appendChild(selectProject);
 

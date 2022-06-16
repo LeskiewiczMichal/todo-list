@@ -420,9 +420,8 @@
     overflow: hidden;
 }
 
-#main > button { 
+#addNewTodoBtn { 
     padding: 20px;
-    width: 200px;
     background-color: #FFFFFF;
     border-radius: 10px;
     border: none;
@@ -444,6 +443,17 @@
     margin-top: 10px;
 }
 
+#removeProjectBtn {
+   background-color: #FF3B3F;
+   padding: 10px;
+   width: 200px;
+   align-self: flex-end;
+   border-radius: 10px;
+   border: none;
+   box-shadow: 0 0 5px #000000;
+   margin: 15px;
+}
+
 /* project form styling */
 #inputDiv {
     position: absolute;
@@ -455,10 +465,13 @@
     top: 50%;
     margin-top: -200px;
     box-shadow: 0 0 10px #000000;
+    padding: 15px;
 
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+
 }
 
 #inputDiv > button {
@@ -476,6 +489,9 @@
     padding: 10px;
 }
 
+#exitProjectForm {
+    align-self: flex-end;
+}
 
 
 /* todo styling */
@@ -508,6 +524,11 @@
     border-radius: 10px;
 }
 
+#basicInformationDiv > button:hover,
+#removeTodoBtn:hover {
+    cursor: pointer; 
+}
+
 #basicInformationDiv > div > p:first-of-type,
 #moreInformationDiv > div > p:first-of-type {
     font-weight: bold;
@@ -528,6 +549,7 @@
     top: 50%;
     margin-top: -200px;
     box-shadow: 0 0 10px #000000;
+    padding: 15px;
 
     display: flex;
     flex-direction: column;
@@ -571,3 +593,11 @@ input[type="label"] {
     padding: 10px;
 }
 
+#exitTodoForm {
+    align-self: flex-end;
+}
+
+
+.unclickable {
+    pointer-events: none;
+}

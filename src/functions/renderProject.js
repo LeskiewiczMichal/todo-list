@@ -1,9 +1,10 @@
 import {renderTodos} from "./renderTodo";
 import { createAddButton } from "./createAddButton";
+import { createRemoveProjectButton } from "./removeProjectButton";
 
-const renderProject = (todoList) => {
-    // document.querySelector('#toDoName').value = '';
+const renderProject = (todoList, selecProjectBtn) => {
     createAddButton(todoList);
+    createRemoveProjectButton(selecProjectBtn);
     renderTodos(todoList);
 };
 

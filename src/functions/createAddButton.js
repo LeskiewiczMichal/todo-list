@@ -6,6 +6,7 @@ const main = document.querySelector('#main');
 const createAddButton = (todoList) => {
     main.removeChild(main.firstChild);
     const newBtn = document.createElement('button');
+    newBtn.setAttribute('id', 'addNewTodoBtn')
     newBtn.innerText = 'Add new todo';
     newBtn.addEventListener('click', () => {
         addNewToDo(todoList);

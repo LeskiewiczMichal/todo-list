@@ -1,13 +1,22 @@
 import { loadMainPage } from "./mainPage";
 import { Project } from "./newProject";
 
+// home project button
 const homeButton = () => {
     const btn = document.querySelector('#home');
 
     btn.addEventListener('click', loadMainPage);
 }
 
+// new project button
 const newProject = () => {
+    const mainDiv = document.querySelector('#main');
+    const menuDiv = document.querySelector('#menu');
+
+    // make other elements unclickable 
+    menuDiv.classList.add('unclickable');
+    mainDiv.classList.add('unclickable');
+
 
     const nameInput = document.createElement('input');
     nameInput.setAttribute('type', 'text');
@@ -19,10 +28,28 @@ const newProject = () => {
     confirmButton.addEventListener('click', () => {
         const project = Project(nameInput.value);
         document.querySelector('#inputDiv').remove();
+
+        // make other elements clickable
+        menuDiv.classList.remove('unclickable');
+        mainDiv.classList.remove('unclickable');
+    })
+    
+    const exitButton = document.createElement('button');
+    exitButton.innerText = 'X';
+    exitButton.setAttribute('id', 'exitProjectForm');
+    exitButton.addEventListener('click', (e) => {
+        // remove the form
+        e.target.parentNode.remove();
+
+        // make other elements clickable
+        menuDiv.classList.remove('unclickable');
+        mainDiv.classList.remove('unclickable');
     })
 
+    // create and append form into layout
     const inputDiv = document.createElement('div');
     inputDiv.setAttribute('id', 'inputDiv');
+    inputDiv.appendChild(exitButton)
     inputDiv.appendChild(nameInput);
     inputDiv.appendChild(confirmButton);
 

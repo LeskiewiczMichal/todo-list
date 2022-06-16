@@ -3,7 +3,14 @@ import {Todo} from "./todo-item-factory"
 
 const addNewToDo = (todoList) => {
     let newTodo;
+    const mainDiv = document.querySelector('#main');
+    const menuDiv = document.querySelector('#menu');
 
+    // make other elements unclickable 
+    menuDiv.classList.add('unclickable');
+    mainDiv.classList.add('unclickable');
+
+    // input form
     const nameInput = document.createElement('input');
         nameInput.setAttribute('type', 'text');
         nameInput.setAttribute('name', 'todoName');
@@ -55,19 +62,38 @@ const addNewToDo = (todoList) => {
     priorityWraper.appendChild(priorityLabelMedium);
     priorityWraper.appendChild(priorityLabelHigh);
 
+    // confirms todo
     const createTodoButton = document.createElement('button');
     createTodoButton.setAttribute('id', 'createTodoButton')
     createTodoButton.textContent = 'Create';
     createTodoButton.addEventListener('click', () => {
+        // crate todo from factory function passing input values, push to the list and render list
         newTodo = Todo();
         todoList.push(newTodo);
         renderTodos(todoList)
         inputDiv.remove();
+
+        // make other elements clickable
+        menuDiv.classList.remove('unclickable');
+        mainDiv.classList.remove('unclickable');
+    })
+
+    const exitButton = document.createElement('button');
+    exitButton.setAttribute('id', 'exitTodoForm')
+    exitButton.innerText = 'X';
+    exitButton.addEventListener('click', (e) => {
+        // remove the form
+        e.target.parentNode.remove();
+
+        // make other elements clickable
+        menuDiv.classList.remove('unclickable');
+        mainDiv.classList.remove('unclickable');
     })
         
-    
+    // create and append input form
     const inputDiv = document.createElement('div');
     inputDiv.setAttribute('id', 'todoInputDiv');
+    inputDiv.appendChild(exitButton);
     inputDiv.appendChild(nameInput);
     inputDiv.appendChild(descriptionInput);
     inputDiv.appendChild(timeInput);
@@ -76,9 +102,6 @@ const addNewToDo = (todoList) => {
 
 
     document.querySelector('#layout').appendChild(inputDiv);
-
-    // document.querySelector('#toDoName').value = '';
-    // renderTodos(todoList);
 }
 
 export {addNewToDo};
