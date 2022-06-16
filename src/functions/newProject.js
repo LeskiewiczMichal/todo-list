@@ -8,20 +8,22 @@ const Project = (name) => {
 
     const projectName = name;
 
+    const getProjectName = () => projectName;
     const getTodoList = () => todoList;
 
     // create button to select the project in menu 
-    const selectProject = document.createElement('button');
-    selectProject.innerText = name;
-    selectProject.addEventListener('click', (e) => {
-        const selecProjectBtn = e.target;
-        renderProject(todoList, selecProjectBtn);
-    });
+    // const selectProject = document.createElement('button');
+    // selectProject.innerText = name;
+    // selectProject.addEventListener('click', (e) => {
+    //     const selecProjectBtn = e.target;
+    //     renderProject(todoList, selecProjectBtn);
+    // });
 
 
-    document.querySelector('#projectList').appendChild(selectProject);
+    // document.querySelector('#projectList').appendChild(selectProject);
+    // localStorage.setItem(name, )
 
-    return { getTodoList }
+    return { getTodoList, getProjectName }
 }
 
 export { Project };
