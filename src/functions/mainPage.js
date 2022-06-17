@@ -6,7 +6,11 @@ import { createAddButton } from "./createAddButton";
 const todoList = [];
 
 const loadMainPage = () => {
-    // addTodoButton.replaceWith(addTodoButton.clone());    
+    // addTodoButton.replaceWith(addTodoButton.clone());  
+    if (document.querySelector('#removeProjectBtn')) {
+        document.querySelector('#removeProjectBtn').remove(); 
+    } 
+    
     createAddButton(todoList);
     renderTodos(todoList);
 }
