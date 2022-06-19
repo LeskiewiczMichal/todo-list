@@ -1,12 +1,16 @@
 import "./style.css"
-import { loadMainPage } from "./functions/mainPage";
-import { homeButton, newProject } from "./functions/projectButtons";
-import { renderProjectButton } from "./functions/renderProject";
+import { createProjectForm } from "./functions/UI"
 
 // Cache DOM
-homeButton();
+// homeButton();
 
-loadMainPage();
+// loadMainPage();
 
-document.querySelector('#newProjectBtn').addEventListener('click', newProject);
-document.querySelector('#newProjectBtn').addEventListener('click', renderProjectButton);
+// document.querySelector('#newProjectBtn').addEventListener('click', newProject);
+// document.querySelector('#newProjectBtn').addEventListener('click', renderProjectButton);
+
+// bind events
+document.querySelector('#newProjectBtn').addEventListener('click', () => {
+    createProjectForm();
+})
+

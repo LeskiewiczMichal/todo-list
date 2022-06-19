@@ -52,8 +52,9 @@ const renderProjects = (projects) => {
         selectProject.addEventListener('click', (e) => {
             const selecProjectBtn = e.target;
             const todoList = project.getTodoList();
-            renderProject(todoList, selecProjectBtn);
-        }); 
+            createAddButton(todoList);
+            createRemoveProjectButton(selecProjectBtn);
+            renderTodos(todoList);        }); 
 
         // document.querySelector('#projectList').appendChild(homeButton);
         document.querySelector('#projectList').appendChild(selectProject)

@@ -11,8 +11,11 @@ const loadMainPage = () => {
         document.querySelector('#removeProjectBtn').remove(); 
     } 
     
-    createAddButton(todoList);
-    renderTodos(todoList);
+    
 }
 
-export {loadMainPage};
+const homeButton = () => {
+    document.querySelector('#home').addEventListener('click', loadMainPage);
+}
+
+export {loadMainPage, homeButton};
