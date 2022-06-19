@@ -10,3 +10,10 @@ loadMainPage();
 
 document.querySelector('#newProjectBtn').addEventListener('click', newProject);
 document.querySelector('#newProjectBtn').addEventListener('click', renderProjectButton);
+
+const newbtn = document.querySelector('button');
+newbtn.textContent = 'hit'
+newbtn.addEventListener('click', () => {
+    localStorage.clear();
+})
+document.querySelector('#menu').appendChild(newbtn)

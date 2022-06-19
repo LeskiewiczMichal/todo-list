@@ -45,7 +45,7 @@ const Todo = () => {
     
 
 
-    return {getTitle, addDescription, getDescription, getDueDate, getPriority}
+    return {title, description, dueDate, priority}
 };
 
 

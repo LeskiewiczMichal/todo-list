@@ -1,4 +1,5 @@
 import { renderTodos } from "./renderTodo";
+import { getProjects, saveProjects } from "./storage";
 import {Todo} from "./todo-item-factory" 
 
 const addNewToDo = (todoList) => {
@@ -68,11 +69,14 @@ const addNewToDo = (todoList) => {
     createTodoButton.textContent = 'Create';
     createTodoButton.addEventListener('click', () => {
         // crate todo from factory function passing input values, push to the list and render list
+        // let projects = getProjects()
         newTodo = Todo();
         todoList.push(newTodo);
+
+        console.log(todoList)
         renderTodos(todoList)
         inputDiv.remove();
-
+        // saveProjects(projects)
         // make other elements clickable
         menuDiv.classList.remove('unclickable');
         mainDiv.classList.remove('unclickable');

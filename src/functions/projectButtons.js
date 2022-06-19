@@ -1,6 +1,7 @@
 import { loadMainPage } from "./mainPage";
 import { Project } from "./newProject";
 import { renderProjects } from "./renderProject";
+import { getProjects, saveProjects } from "./storage";
 
 // home project button
 const homeButton = () => {
@@ -9,12 +10,14 @@ const homeButton = () => {
     btn.addEventListener('click', loadMainPage);
 }
 
-let projects = [];
+// let projects = [];
 
-const getProjects = () => projects;
+// const getProjects = () => projects;
 
 // new project button
 const newProject = () => {
+    let projects = getProjects()
+
     const mainDiv = document.querySelector('#main');
     const menuDiv = document.querySelector('#menu');
 
@@ -33,8 +36,12 @@ const newProject = () => {
     confirmButton.addEventListener('click', () => {
         const project = Project(nameInput.value);
         projects.push(project);
+        console.log(projects)
         document.querySelector('#inputDiv').remove();
         renderProjects(projects)
+
+        saveProjects(projects);
+
         // make other elements clickable
         menuDiv.classList.remove('unclickable');
         mainDiv.classList.remove('unclickable');
@@ -62,4 +69,4 @@ const newProject = () => {
     document.querySelector('#layout').appendChild(inputDiv);
 };
 
-export { homeButton, newProject, getProjects };
+export { homeButton, newProject };

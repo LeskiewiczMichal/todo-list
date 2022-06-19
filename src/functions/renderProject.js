@@ -48,10 +48,10 @@ const renderProjects = (projects) => {
         
         
         const selectProject = document.createElement('button');
-        selectProject.innerText = project.getProjectName();
+        selectProject.innerText = project.projectName;
         selectProject.addEventListener('click', (e) => {
             const selecProjectBtn = e.target;
-            const todoList = project.getTodoList();
+            const todoList = project.todoList;
             renderProject(todoList, selecProjectBtn);
         }); 
 

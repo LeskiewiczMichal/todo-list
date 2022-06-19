@@ -8,7 +8,7 @@ const renderTodos = (todoList) => {
         const listElement = document.createElement('li');
 
         const title = document.createElement('p');
-        title.innerText = Todo.getTitle();
+        title.innerText = Todo.title;
         const titleInfo = document.createElement('p');
         titleInfo.textContent = 'Title:';
         const titleDiv = document.createElement('div');
@@ -16,7 +16,7 @@ const renderTodos = (todoList) => {
         titleDiv.appendChild(title);
         
         const description = document.createElement('p');
-        description.innerText = Todo.getDescription();
+        description.innerText = Todo.description;
         const descriptionInfo = document.createElement('p');
         descriptionInfo.textContent = 'Description:';
         const descriptionDiv = document.createElement('div');
@@ -24,7 +24,7 @@ const renderTodos = (todoList) => {
         descriptionDiv.appendChild(description);
         
         const dueDate = document.createElement('p');
-        dueDate.innerText = Todo.getDueDate();
+        dueDate.innerText = Todo.dueDate;
         const dateInfo = document.createElement('p');
         dateInfo.textContent = 'Date:';
         const dateDiv = document.createElement('div');
@@ -32,7 +32,7 @@ const renderTodos = (todoList) => {
         dateDiv.appendChild(dueDate);
 
         const priority = document.createElement('p');
-        priority.innerText = Todo.getPriority();
+        priority.innerText = Todo.priority;
         const priorityInfo = document.createElement('p');
         priorityInfo.textContent = 'Priority:';
         const priorityDiv = document.createElement('div');
@@ -61,7 +61,7 @@ const renderTodos = (todoList) => {
         removeTodo.setAttribute('id', 'removeTodoBtn');
         removeTodo.addEventListener('click', (e) => {
             const indexOfTodo = todoList.findIndex(todo => {
-                return todo.getTitle() === Todo.getTitle();
+                return todo.title === Todo.title;
             });
             todoList.splice(indexOfTodo, 1);
             e.target.parentNode.parentNode.remove()

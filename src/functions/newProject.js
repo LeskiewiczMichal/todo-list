@@ -23,7 +23,7 @@ const Project = (name) => {
     // document.querySelector('#projectList').appendChild(selectProject);
     // localStorage.setItem(name, )
 
-    return { getTodoList, getProjectName }
+    return { projectName, todoList }
 }
 
 export { Project };
