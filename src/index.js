@@ -1,4 +1,5 @@
 import "./style.css"
+import { loadHomePage } from "./functions/mainPage";
 import { createProjectForm } from "./functions/UI"
 
 // Cache DOM
@@ -10,7 +11,11 @@ import { createProjectForm } from "./functions/UI"
 // document.querySelector('#newProjectBtn').addEventListener('click', renderProjectButton);
 
 // bind events
+
 document.querySelector('#newProjectBtn').addEventListener('click', () => {
     createProjectForm();
 })
+document.querySelector('#home').addEventListener('click', loadHomePage);
 
+
+loadHomePage();

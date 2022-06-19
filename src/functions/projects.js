@@ -3,28 +3,28 @@ const { saveProjects, getProjects } = require("./storage");
 const Project = (name) => {
     const todoList = [];
 
-    const projectName = name;
+    // const name = name;
 
-    return { projectName, todoList }
+    return { name, todoList }
 };
 
 const newProject = () => {
     // create new project
     const project = Project(document.querySelector('#projectName').value);
 
-    // get project list and push new project
+    // get project list and add new project
     const projectList = getProjects();
     projectList.push(project);
 
-    // removes the form for creating project
+    // delete project creation form
     document.querySelector('#inputDiv').remove();
 
-    // save new project in local storage
+    // save new project to the list
     saveProjects(projectList);
-    
+
     // make other elements clickable
     document.querySelector('#menu').classList.remove('unclickable');
     document.querySelector('#main').classList.remove('unclickable');
 };
 
-export { newProject }
+export { newProject, Project }

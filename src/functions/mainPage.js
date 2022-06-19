@@ -1,21 +1,19 @@
 import {renderTodos} from "./renderTodo";
 import { createAddButton } from "./createAddButton";
+import { getHomeTodoList } from "./storage";
 
 
 // Array for todos
-const todoList = [];
+const todoList = getHomeTodoList;
 
-const loadMainPage = () => {
+const loadHomePage = () => {
     // addTodoButton.replaceWith(addTodoButton.clone());  
     if (document.querySelector('#removeProjectBtn')) {
         document.querySelector('#removeProjectBtn').remove(); 
     } 
     
-    
+    // createAddButton(todoList);
+    // renderTodos(todoList);
 }
 
-const homeButton = () => {
-    document.querySelector('#home').addEventListener('click', loadMainPage);
-}
-
-export {loadMainPage, homeButton};
+export {loadHomePage};
