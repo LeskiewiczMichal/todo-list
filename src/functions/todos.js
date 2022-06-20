@@ -19,7 +19,7 @@ const Todo = (todoProject) => {
 };
 
 
-
+// funcion used by button in UI todo form
 const addNewToDo = (todoProject) => {
         // crate todo from factory function passing input values, push to the list and render list
         const newTodo = Todo(todoProject);
@@ -34,12 +34,12 @@ const addNewToDo = (todoProject) => {
         document.querySelector('#main').classList.remove('unclickable');
 }
 
-const removeTodo = (todoList, Todo) => {
-    const indexOfTodo = todoList.findIndex(todo => {
-        return todo.getTitle() === Todo.getTitle();
-    });
-    todoList.splice(indexOfTodo, 1);
-    renderTodos(todoList)
-};
+// const removeTodo = (todoList, Todo) => {
+//     const indexOfTodo = todoList.findIndex(todo => {
+//         return todo.getTitle() === Todo.getTitle();
+//     });
+//     todoList.splice(indexOfTodo, 1);
+//     renderTodos(todoList)
+// };
 
 export { addNewToDo }

@@ -1,6 +1,6 @@
 import "./style.css"
 import { loadHomePage } from "./functions/mainPage";
-import { createProjectForm } from "./functions/UI"
+import { createProjectForm, renderProjects } from "./functions/UI"
 
 // Cache DOM
 // homeButton();
@@ -19,3 +19,4 @@ document.querySelector('#home').addEventListener('click', loadHomePage);
 
 
 loadHomePage();
+renderProjects()

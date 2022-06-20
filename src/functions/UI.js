@@ -1,5 +1,5 @@
 // const { newProject } = require("./projects");
-import { getProjects, getTodoList, saveProjects } from "./storage";
+import { getProjects, getTodoList, saveProjects, saveTodoList } from "./storage";
 import { newProject } from "./projects"
 import { addNewToDo } from "./todos";
 import { loadHomePage } from "./mainPage";
@@ -132,7 +132,7 @@ const createRemoveProjectButton = (selectProjectButton, todoProject) => {
                 saveProjects(projectList);
             }
         });
-        loadMainPage();
+        loadHomePage();
     })
     document.querySelector('#main').appendChild(newBtn);
 };
@@ -145,13 +145,14 @@ const renderProjects = () => {
     const homeButton = document.createElement('button');
         homeButton.setAttribute('id', 'home');
         homeButton.innerText = 'Home';
-        // homeButton.addEventListener('click', loadHomePage);
+        homeButton.addEventListener('click', loadHomePage);
     
         document.querySelector('#projectList').appendChild(homeButton);
 
 
     projects.forEach(project => {
         const selectProject = document.createElement('button');
+        // add class projectbutton, onclick search in queryselectedall .projectbutton to find active and remove class, add class to clicked button
         selectProject.innerText = project.name;
         selectProject.addEventListener('click', (e) => {
             const selecProjectBtn = e.target;
@@ -232,6 +233,7 @@ const renderTodos = (todoProject) => {
                     return todo.title === Todo.title;
                 });
                 todoList.splice(indexOfTodo, 1);
+                saveTodoList(todoList)
                 e.target.parentNode.parentNode.remove()
                 })
 
@@ -303,5 +305,5 @@ function createProjectForm() {
     document.querySelector('#layout').appendChild(inputDiv);
 };
 
-export { createProjectForm, renderProjects, renderTodos }
+export { createProjectForm, renderProjects, renderTodos, createAddTodoButton }
 

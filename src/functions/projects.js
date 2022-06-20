@@ -27,4 +27,4 @@ const newProject = () => {
     document.querySelector('#main').classList.remove('unclickable');
 };
 
-export { newProject, Project }
+export { newProject }

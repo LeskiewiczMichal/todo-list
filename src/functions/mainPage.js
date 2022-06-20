@@ -1,10 +1,10 @@
-import {renderTodos} from "./renderTodo";
-import { createAddButton } from "./createAddButton";
 import { getHomeTodoList } from "./storage";
-
+import { createAddTodoButton, renderTodos } from "./UI";
 
 // Array for todos
-const todoList = getHomeTodoList;
+// const todoList = getHomeTodoList;
+
+
 
 const loadHomePage = () => {
     // addTodoButton.replaceWith(addTodoButton.clone());  
@@ -12,8 +12,9 @@ const loadHomePage = () => {
         document.querySelector('#removeProjectBtn').remove(); 
     } 
     
+    createAddTodoButton('homePage');
     // createAddButton(todoList);
-    // renderTodos(todoList);
+    renderTodos('homePage');
 }
 
 export {loadHomePage};
