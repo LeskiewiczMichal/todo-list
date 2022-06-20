@@ -1,5 +1,7 @@
+import { getTodoList, saveTodoList } from "./storage";
+import { renderTodos } from "./UI";
 
-const Todo = () => {
+const Todo = (todoProject) => {
     const title = document.querySelector('#todoName').value;
     const description = document.querySelector('#todoDescription').value;
     const dueDate = document.querySelector('#todoDate').value;
@@ -11,23 +13,25 @@ const Todo = () => {
     }   else if (todoPriorityHigh.checked) {
         priority = 'High';
     }
-    
+    const belongsTo = todoProject;
 
-    return {title, description, dueDate, priority}
+    return {title, description, dueDate, priority, belongsTo}
 };
 
 
 
-const addNewToDo = () => {
+const addNewToDo = (todoProject) => {
         // crate todo from factory function passing input values, push to the list and render list
-        newTodo = Todo();
+        const newTodo = Todo(todoProject);
+        const todoList = getTodoList();
         todoList.push(newTodo);
-        renderTodos(todoList)
-        inputDiv.remove();
+        saveTodoList(todoList);
+        renderTodos(todoProject)
+        document.querySelector('#todoInputDiv').remove();
 
         // make other elements clickable
         document.querySelector('#menu').classList.remove('unclickable');
-        document.querySelector('#main'.classList.remove('unclickable');
+        document.querySelector('#main').classList.remove('unclickable');
 }
 
 const removeTodo = (todoList, Todo) => {

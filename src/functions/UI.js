@@ -1,10 +1,10 @@
 // const { newProject } = require("./projects");
-import { getProjects } from "./storage";
+import { getProjects, getTodoList, saveProjects } from "./storage";
 import { newProject } from "./projects"
-import { addNewToDo } from "./addNewTodoButton";
+import { addNewToDo } from "./todos";
 import { loadHomePage } from "./mainPage";
 
-function createTodoForm() {
+function createTodoForm(todoProject) {
     const mainDiv = document.querySelector('#main');
     const menuDiv = document.querySelector('#menu');
 
@@ -68,7 +68,9 @@ function createTodoForm() {
     const createTodoButton = document.createElement('button');
     createTodoButton.setAttribute('id', 'createTodoButton')
     createTodoButton.textContent = 'Create';
-    createTodoButton.addEventListener('click', addNewToDo);
+    createTodoButton.addEventListener('click', () => {
+        addNewToDo(todoProject)
+    });
 
     const exitButton = document.createElement('button');
     exitButton.setAttribute('id', 'exitTodoForm')
@@ -96,20 +98,21 @@ function createTodoForm() {
     document.querySelector('#layout').appendChild(inputDiv);
 }
 
-const createAddTodoButton = (todoList) => {
+const createAddTodoButton = (todoProject) => {
     const main = document.querySelector('#main');
     main.removeChild(main.firstChild);
     const newBtn = document.createElement('button');
     newBtn.setAttribute('id', 'addNewTodoBtn')
     newBtn.innerText = 'Add new todo';
     newBtn.addEventListener('click', () => {
-        addNewToDo(todoList);
-        renderTodos(todoList);
+        // addNewToDo()
+        createTodoForm(todoProject);
+        // renderTodos();
     })
     main.insertBefore(newBtn, main.firstChild);
 }
 
-const createRemoveProjectButton = (selectProjectButton) => {
+const createRemoveProjectButton = (selectProjectButton, todoProject) => {
     // if already have one btn remove it from dom
     if (document.querySelector('#removeProjectBtn')) {
         document.querySelector('#removeProjectBtn').remove();
@@ -121,6 +124,14 @@ const createRemoveProjectButton = (selectProjectButton) => {
         // remove button selecting project, remove self and load to main page 
         selectProjectButton.remove();
         newBtn.remove();
+        const projectList = getProjects();
+        projectList.forEach(project => {
+            if (project.name === todoProject) {
+                const projectIndex = projectList.indexOf(project);
+                projectList.splice(projectIndex, 1);
+                saveProjects(projectList);
+            }
+        });
         loadMainPage();
     })
     document.querySelector('#main').appendChild(newBtn);
@@ -134,20 +145,20 @@ const renderProjects = () => {
     const homeButton = document.createElement('button');
         homeButton.setAttribute('id', 'home');
         homeButton.innerText = 'Home';
-        homeButton.addEventListener('click', loadHomePage);
+        // homeButton.addEventListener('click', loadHomePage);
     
         document.querySelector('#projectList').appendChild(homeButton);
 
 
     projects.forEach(project => {
         const selectProject = document.createElement('button');
-        selectProject.innerText = project.projectName;
+        selectProject.innerText = project.name;
         selectProject.addEventListener('click', (e) => {
             const selecProjectBtn = e.target;
-            const todoList = project.todoList;
-            createAddButton(todoList);
-            createRemoveProjectButton(selecProjectBtn);
-            renderTodos(todoList);        
+            const todoProject = project.name;
+            createAddTodoButton(todoProject);
+            createRemoveProjectButton(selecProjectBtn, todoProject);
+            renderTodos(todoProject);        
         }); 
 
         // document.querySelector('#projectList').appendChild(homeButton);
@@ -155,93 +166,96 @@ const renderProjects = () => {
     });
 }
 
-const renderTodos = (todoList) => {
+const renderTodos = (todoProject) => {
+    const todoList = getTodoList();
     const DOMList = document.querySelector('#toDoList');
     DOMList.innerHTML = '';
 
     todoList.forEach(Todo => {
-        const listElement = document.createElement('li');
+        if (Todo.belongsTo === todoProject) {
+            const listElement = document.createElement('li');
 
-        const title = document.createElement('p');
-        title.innerText = Todo.getTitle();
-        const titleInfo = document.createElement('p');
-        titleInfo.textContent = 'Title:';
-        const titleDiv = document.createElement('div');
-        titleDiv.appendChild(titleInfo);
-        titleDiv.appendChild(title);
-        
-        const description = document.createElement('p');
-        description.innerText = Todo.getDescription();
-        const descriptionInfo = document.createElement('p');
-        descriptionInfo.textContent = 'Description:';
-        const descriptionDiv = document.createElement('div');
-        descriptionDiv.appendChild(descriptionInfo);
-        descriptionDiv.appendChild(description);
-        
-        const dueDate = document.createElement('p');
-        dueDate.innerText = Todo.getDueDate();
-        const dateInfo = document.createElement('p');
-        dateInfo.textContent = 'Date:';
-        const dateDiv = document.createElement('div');
-        dateDiv.appendChild(dateInfo);
-        dateDiv.appendChild(dueDate);
+            const title = document.createElement('p');
+            title.innerText = Todo.title;
+            const titleInfo = document.createElement('p');
+            titleInfo.textContent = 'Title:';
+            const titleDiv = document.createElement('div');
+            titleDiv.appendChild(titleInfo);
+            titleDiv.appendChild(title);
+            
+            const description = document.createElement('p');
+            description.innerText = Todo.description;
+            const descriptionInfo = document.createElement('p');
+            descriptionInfo.textContent = 'Description:';
+            const descriptionDiv = document.createElement('div');
+            descriptionDiv.appendChild(descriptionInfo);
+            descriptionDiv.appendChild(description);
+            
+            const dueDate = document.createElement('p');
+            dueDate.innerText = Todo.dueDate;
+            const dateInfo = document.createElement('p');
+            dateInfo.textContent = 'Date:';
+            const dateDiv = document.createElement('div');
+            dateDiv.appendChild(dateInfo);
+            dateDiv.appendChild(dueDate);
 
-        const priority = document.createElement('p');
-        priority.innerText = Todo.getPriority();
-        const priorityInfo = document.createElement('p');
-        priorityInfo.textContent = 'Priority:';
-        const priorityDiv = document.createElement('div');
-        priorityDiv.appendChild(priorityInfo);
-        priorityDiv.appendChild(priority);
+            const priority = document.createElement('p');
+            priority.innerText = Todo.priority;
+            const priorityInfo = document.createElement('p');
+            priorityInfo.textContent = 'Priority:';
+            const priorityDiv = document.createElement('div');
+            priorityDiv.appendChild(priorityInfo);
+            priorityDiv.appendChild(priority);
 
-        const seeLess = document.createElement('button');
-        seeLess.textContent = 'See less';
-        seeLess.addEventListener('click', (e) => {
-            e.target.parentNode.parentNode.classList.remove('seeDetails');
-            document.querySelector('#moreInformationDiv').remove();
-            seeLess.replaceWith(seeMore);
-        })
-
-        const seeMore = document.createElement('button');
-        seeMore.textContent = 'Details';
-        seeMore.addEventListener('click', (e) => {
-            e.target.parentNode.parentNode.className = 'seeDetails';
-            e.target.parentNode.parentNode.appendChild(moreInformationDiv);
-            seeMore.replaceWith(seeLess);
-
-        })
-
-        const removeTodo = document.createElement('button');
-        removeTodo.textContent = 'Remove todo';
-        removeTodo.setAttribute('id', 'removeTodoBtn');
-        removeTodo.addEventListener('click', (e) => {
-            const indexOfTodo = todoList.findIndex(todo => {
-                return todo.getTitle() === Todo.getTitle();
-            });
-            todoList.splice(indexOfTodo, 1);
-            e.target.parentNode.parentNode.remove()
+            const seeLess = document.createElement('button');
+            seeLess.textContent = 'See less';
+            seeLess.addEventListener('click', (e) => {
+                e.target.parentNode.parentNode.classList.remove('seeDetails');
+                document.querySelector('#moreInformationDiv').remove();
+                seeLess.replaceWith(seeMore);
             })
 
-        const basicInformationDiv = document.createElement('div');
-        basicInformationDiv.setAttribute('id', 'basicInformationDiv');
-        basicInformationDiv.appendChild(titleDiv);
-        basicInformationDiv.appendChild(dateDiv);
-        basicInformationDiv.appendChild(seeMore);
+            const seeMore = document.createElement('button');
+            seeMore.textContent = 'Details';
+            seeMore.addEventListener('click', (e) => {
+                e.target.parentNode.parentNode.className = 'seeDetails';
+                e.target.parentNode.parentNode.appendChild(moreInformationDiv);
+                seeMore.replaceWith(seeLess);
 
-        const moreInformationDiv = document.createElement('div');
-        moreInformationDiv.setAttribute('id', 'moreInformationDiv');
-        moreInformationDiv.appendChild(descriptionDiv);
-        moreInformationDiv.appendChild(priorityDiv);
-        moreInformationDiv.appendChild(removeTodo)
+            })
 
-       
+            const removeTodo = document.createElement('button');
+            removeTodo.textContent = 'Remove todo';
+            removeTodo.setAttribute('id', 'removeTodoBtn');
+            removeTodo.addEventListener('click', (e) => {
+                const indexOfTodo = todoList.findIndex(todo => {
+                    return todo.title === Todo.title;
+                });
+                todoList.splice(indexOfTodo, 1);
+                e.target.parentNode.parentNode.remove()
+                })
+
+            const basicInformationDiv = document.createElement('div');
+            basicInformationDiv.setAttribute('id', 'basicInformationDiv');
+            basicInformationDiv.appendChild(titleDiv);
+            basicInformationDiv.appendChild(dateDiv);
+            basicInformationDiv.appendChild(seeMore);
+
+            const moreInformationDiv = document.createElement('div');
+            moreInformationDiv.setAttribute('id', 'moreInformationDiv');
+            moreInformationDiv.appendChild(descriptionDiv);
+            moreInformationDiv.appendChild(priorityDiv);
+            moreInformationDiv.appendChild(removeTodo)
+
         
-        listElement.appendChild(basicInformationDiv);
-        // listElement.appendChild(description);
-        // listElement.appendChild(priority);
+            
+            listElement.appendChild(basicInformationDiv);
+            // listElement.appendChild(description);
+            // listElement.appendChild(priority);
 
-        DOMList.appendChild(listElement);
-    })
+            DOMList.appendChild(listElement);
+            };
+        });
 }
 
 function createProjectForm() {
@@ -289,5 +303,5 @@ function createProjectForm() {
     document.querySelector('#layout').appendChild(inputDiv);
 };
 
-export { createProjectForm, renderProjects }
+export { createProjectForm, renderProjects, renderTodos }
 

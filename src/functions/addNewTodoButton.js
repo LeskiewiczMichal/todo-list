@@ -104,4 +104,4 @@ const addNewToDo = (todoList) => {
     document.querySelector('#layout').appendChild(inputDiv);
 }
 
-export {addNewToDo};
+// export {addNewToDo};
