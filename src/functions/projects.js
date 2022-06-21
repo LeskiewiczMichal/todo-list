@@ -1,11 +1,7 @@
 const { saveProjects, getProjects } = require("./storage");
 
 const Project = (name) => {
-    const todoList = [];
-
-    // const name = name;
-
-    return { name, todoList }
+    return { name }
 };
 
 const newProject = () => {

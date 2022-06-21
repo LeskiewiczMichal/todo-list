@@ -72,6 +72,7 @@ function createTodoForm(todoProject) {
         addNewToDo(todoProject)
     });
 
+    // exit form
     const exitButton = document.createElement('button');
     exitButton.setAttribute('id', 'exitTodoForm')
     exitButton.innerText = 'X';
@@ -98,6 +99,7 @@ function createTodoForm(todoProject) {
     document.querySelector('#layout').appendChild(inputDiv);
 }
 
+// creates "add new todo" for each project render in menu;
 const createAddTodoButton = (todoProject) => {
     const main = document.querySelector('#main');
     main.removeChild(main.firstChild);
@@ -105,13 +107,12 @@ const createAddTodoButton = (todoProject) => {
     newBtn.setAttribute('id', 'addNewTodoBtn')
     newBtn.innerText = 'Add new todo';
     newBtn.addEventListener('click', () => {
-        // addNewToDo()
         createTodoForm(todoProject);
-        // renderTodos();
     })
     main.insertBefore(newBtn, main.firstChild);
 }
 
+// creates remove project button for each project rendered in menu
 const createRemoveProjectButton = (selectProjectButton, todoProject) => {
     // if already have one btn remove it from dom
     if (document.querySelector('#removeProjectBtn')) {
@@ -121,7 +122,7 @@ const createRemoveProjectButton = (selectProjectButton, todoProject) => {
     newBtn.setAttribute('id', 'removeProjectBtn')
     newBtn.innerText = 'Remove Project';
     newBtn.addEventListener('click', () => {
-        // remove button selecting project, remove self and load to main page 
+        // remove button selecting project, remove self, remove project from localStorage and load to main page 
         selectProjectButton.remove();
         newBtn.remove();
         const projectList = getProjects();
@@ -138,10 +139,12 @@ const createRemoveProjectButton = (selectProjectButton, todoProject) => {
 };
 
 const renderProjects = () => {
+    // gets projects from localstorage
     let projects = getProjects();
-    console.log(projects);
+    // removes every rendered projects in menu
     document.querySelector('#projectList').innerHTML = '';
 
+    // creates button for home project
     const homeButton = document.createElement('button');
         homeButton.setAttribute('id', 'home');
         homeButton.innerText = 'Home';
@@ -149,31 +152,36 @@ const renderProjects = () => {
     
         document.querySelector('#projectList').appendChild(homeButton);
 
-
+    // creates button in menu for every project
     projects.forEach(project => {
         const selectProject = document.createElement('button');
-        // add class projectbutton, onclick search in queryselectedall .projectbutton to find active and remove class, add class to clicked button
         selectProject.innerText = project.name;
         selectProject.addEventListener('click', (e) => {
-            const selecProjectBtn = e.target;
+            // selectprojectbtn is neened to make removeprojectbutton remove rendered button from the list
+            const selectProjectBtn = e.target;
+            // todoProject is needed in createaddtodobutton to add a "belongsTo" in each todo so later rendertodos can check
+            //  if todo belongs to rendered project so it can be rendered
             const todoProject = project.name;
             createAddTodoButton(todoProject);
-            createRemoveProjectButton(selecProjectBtn, todoProject);
+            createRemoveProjectButton(selectProjectBtn, todoProject);
             renderTodos(todoProject);        
         }); 
-
-        // document.querySelector('#projectList').appendChild(homeButton);
+        // appends every project button in list
         document.querySelector('#projectList').appendChild(selectProject)
     });
 }
 
 const renderTodos = (todoProject) => {
+    // gets todoList from localStorage
     const todoList = getTodoList();
+    // removes every rendered todo
     const DOMList = document.querySelector('#toDoList');
     DOMList.innerHTML = '';
 
     todoList.forEach(Todo => {
+        // if (todo was created in currently rendered project)
         if (Todo.belongsTo === todoProject) {
+            // creating how todo will be seen
             const listElement = document.createElement('li');
 
             const title = document.createElement('p');
@@ -208,6 +216,7 @@ const renderTodos = (todoProject) => {
             priorityDiv.appendChild(priorityInfo);
             priorityDiv.appendChild(priority);
 
+            // button that hides details about todo (available if todo details are rendered)
             const seeLess = document.createElement('button');
             seeLess.textContent = 'See less';
             seeLess.addEventListener('click', (e) => {
@@ -216,6 +225,7 @@ const renderTodos = (todoProject) => {
                 seeLess.replaceWith(seeMore);
             })
 
+            // button that shows details about todo (available if todo details aren't rendered)
             const seeMore = document.createElement('button');
             seeMore.textContent = 'Details';
             seeMore.addEventListener('click', (e) => {
@@ -225,6 +235,7 @@ const renderTodos = (todoProject) => {
 
             })
 
+            // removes rendered todo as well as removes it from the todoList in localstorage
             const removeTodo = document.createElement('button');
             removeTodo.textContent = 'Remove todo';
             removeTodo.setAttribute('id', 'removeTodoBtn');
@@ -249,11 +260,7 @@ const renderTodos = (todoProject) => {
             moreInformationDiv.appendChild(priorityDiv);
             moreInformationDiv.appendChild(removeTodo)
 
-        
-            
             listElement.appendChild(basicInformationDiv);
-            // listElement.appendChild(description);
-            // listElement.appendChild(priority);
 
             DOMList.appendChild(listElement);
             };
@@ -268,7 +275,6 @@ function createProjectForm() {
     menuDiv.classList.add('unclickable');
     mainDiv.classList.add('unclickable');
 
-
     const nameInput = document.createElement('input');
     nameInput.setAttribute('id', 'projectName');
     nameInput.setAttribute('type', 'text');
@@ -279,6 +285,7 @@ function createProjectForm() {
     confirmButton.innerText = 'confirm';
     confirmButton.setAttribute('id', 'confirmProjectCreation');
     confirmButton.addEventListener('click', () => {
+        // creates project from the form, appends it to localStorage and renders every project in localStorage
         newProject();
         renderProjects();
     })

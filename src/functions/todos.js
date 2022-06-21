@@ -12,34 +12,29 @@ const Todo = (todoProject) => {
         priority = 'Medium';
     }   else if (todoPriorityHigh.checked) {
         priority = 'High';
-    }
+    };
+    // needed to check if todo should be rendered for currently selected project
     const belongsTo = todoProject;
 
     return {title, description, dueDate, priority, belongsTo}
 };
 
 
-// funcion used by button in UI todo form
+// funcion used by button in ui UI
 const addNewToDo = (todoProject) => {
-        // crate todo from factory function passing input values, push to the list and render list
+        // crate todo from factory function passing input values, push to the list taken from localStorage,
+        //  save the list to localStorage and render list from localStorage
         const newTodo = Todo(todoProject);
         const todoList = getTodoList();
         todoList.push(newTodo);
         saveTodoList(todoList);
-        renderTodos(todoProject)
+        renderTodos(todoProject);
+        // removes form for creating todo
         document.querySelector('#todoInputDiv').remove();
 
         // make other elements clickable
         document.querySelector('#menu').classList.remove('unclickable');
         document.querySelector('#main').classList.remove('unclickable');
-}
-
-// const removeTodo = (todoList, Todo) => {
-//     const indexOfTodo = todoList.findIndex(todo => {
-//         return todo.getTitle() === Todo.getTitle();
-//     });
-//     todoList.splice(indexOfTodo, 1);
-//     renderTodos(todoList)
-// };
+};
 
 export { addNewToDo }

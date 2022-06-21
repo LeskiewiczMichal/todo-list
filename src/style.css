@@ -371,6 +371,7 @@
     align-items: stretch;
 }
 
+/* menu styling */
 #menu {
     background-color: #A9A9A9;
     grid-area: menu;
@@ -601,3 +602,6 @@ input[type="label"] {
 .unclickable {
     pointer-events: none;
 }
+
+
+
